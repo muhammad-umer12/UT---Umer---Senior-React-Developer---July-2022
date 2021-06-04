@@ -2,7 +2,7 @@
 
 ## How to use
 
-[or clone the repo](https://github.com/SantoshCode/nextjs-typescript-redux-toolkit-materialui-boilerplate-2021):
+[clone the repo](https://github.com/SantoshCode/nextjs-typescript-redux-toolkit-materialui-boilerplate-2021):
 
 Install it and run:
 
