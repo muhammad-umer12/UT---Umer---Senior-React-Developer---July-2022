@@ -1,10 +1,11 @@
+import '../styles/globals.css';
 import React from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../src/theme';
+import theme from '../theme';
 import { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
-import { makeStore, store } from '../src/store';
+import { makeStore, store } from '../store';
 import { createWrapper } from 'next-redux-wrapper';
 
 function MyApp(props: AppProps) {

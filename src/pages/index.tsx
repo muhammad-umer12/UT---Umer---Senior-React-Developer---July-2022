@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <Layout>
       <>
-        <h1>Hi there</h1>
+        <h1 className="text-red-500">Hi there</h1>
         <Container>
           <Box my={2}>
             {[...new Array(120)]
