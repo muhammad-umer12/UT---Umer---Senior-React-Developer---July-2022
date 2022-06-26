@@ -11,7 +11,8 @@ const api =
   ({ dispatch }: MiddlewareAPI) =>
   (next: Dispatch) =>
   async (action: ApiAction) => {
-    if (action.type !== apiCallBegan.type) return next(action);
+  
+    if (action.type !== apiCallBegan?.type) return next(action);
 
     const {
       url,

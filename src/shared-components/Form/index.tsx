@@ -96,6 +96,7 @@ const DynamicForm = ({ handleFormSubmit, formElements, initialValues, validation
 								className={classes.button}
 								color="primary"
 								variant="contained"
+								
 							>
 								Submit
 							</SubmitButton>

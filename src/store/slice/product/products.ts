@@ -1,4 +1,4 @@
-import { apiCallBegan, submission } from '@/customActions/api';
+import { apiCallBegan, apiCallSubmission } from '@/customActions/api';
 import { createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, AppGetState } from 'store';
 
@@ -8,8 +8,22 @@ const productsSlice = createSlice({
     list: [],
     error: '',
     loading: false,
+    submissionLoading:false,
+    response:''
   },
   reducers: {
+    productSubmissionRequested: (state,action)=> {
+      state.submissionLoading = true
+    },
+    productSubmissionRecieved: (state,action)=> {
+    
+      const {success} = action.payload;
+      if(success){
+        state.response=JSON.stringify(action.payload) ;
+      }
+      state.submissionLoading=false
+     
+    },
     productsRequested: (state, action) => {
       state.loading = true;
     },
@@ -26,7 +40,7 @@ const productsSlice = createSlice({
 });
 
 // ACTIONS
-export const { productsRequested, productsReceived, productsRequestedFailed } =
+export const { productsRequested, productsReceived, productsRequestedFailed,productSubmissionRecieved,productSubmissionRequested } =
   productsSlice.actions;
 
 // REDUCERS
@@ -48,11 +62,17 @@ export const fetchFormFields =
 
   export const submitForm =
   (data: any) =>
-  {
-    return  (dispatch: AppDispatch) => {
-    dispatch(
-      submission({...data
+    async  (dispatch: AppDispatch) => {
+   dispatch(
+    apiCallBegan({
+        url: `${process.env.NEXT_PUBLIC_BACKEND_ROUTE}`,
+        method:'POST',
+        onStart: productSubmissionRequested.type,
+        onSuccess: productSubmissionRecieved.type,
+    
+        data:data,
+    
       })
-    );
-  };
+   );
+  
 }

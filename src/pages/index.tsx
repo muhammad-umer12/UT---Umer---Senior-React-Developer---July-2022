@@ -14,7 +14,7 @@ export default function Home() {
 	const [formElements, setFormElements] = useState([]);
 	const [validationSchema, setValidationSchema] = useState<any>({});
 	const [initialValues, setInitialValues] = useState({});
-
+	const [responseData, setResponseData] = useState('');
 	const { products } = useSelector((state: any) => state?.product);
 
   const validationDecider = (fieldName:string) => {
@@ -36,9 +36,15 @@ export default function Home() {
 		dispatch(fetchFormFields());
 	}, []);
 
+	useEffect(()=>{
+		setResponseData(products.response);
+	},[products])
+
 	useEffect(() => {
+		
 		if (products?.list?.length) {
-			// Set fields' initial data and type for rendering
+			
+		
 			const values = {};
       const validation = {};
 			const elements = products.list.map(
@@ -65,7 +71,8 @@ export default function Home() {
 	}, [products]);
 
 	const handleFormSubmit = (values: any) => {
-		submitForm(values);
+		
+		dispatch(submitForm(values));
 	};
 
 	return (
@@ -83,6 +90,15 @@ export default function Home() {
 					<CircularProgress />
           </div>
 				)}
+		
+		{ responseData?.length ?
+		(<div>
+		<h2>Response</h2>	
+		<p>{responseData}</p>
+		</div>)
+		:
+		<></>	
+		}
 			</Container>
 		</Layout>
 	);
