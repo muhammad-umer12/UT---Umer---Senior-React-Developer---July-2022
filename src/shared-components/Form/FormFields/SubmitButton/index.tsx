@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 function SubmitButton(props: any) {
-    const { children, ...others } = props;
+    const { children,isSubmitDisable, ...others } = props;
     const { submitForm } = useFormikContext();
     const handleSubmit = (e: any) => {
         submitForm()
@@ -17,11 +17,11 @@ function SubmitButton(props: any) {
         fullWidth: true
     }
 
-    const { products } = useSelector((state: any) => state?.product);
+
     const [disabled,setDisabled] = useState<any>(false)
     useEffect(()=>{
-        setDisabled(products?.submissionLoading)
-    },[products])
+        setDisabled(isSubmitDisable)
+    },[isSubmitDisable])
     return (
         <Button disabled={disabled} {...configButton}>
             {children}

@@ -7,7 +7,7 @@ import SubmitButton from "./FormFields/SubmitButton";
 import Select from "./FormFields/Select";
 import PropTypes from "prop-types";
 
-const DynamicForm = ({ handleFormSubmit, formElements, initialValues, validationSchema }: any) => {
+const DynamicForm = ({ handleFormSubmit, formElements, initialValues, validationSchema,isSubmitDisable }: any) => {
 
 	const Component = (formElement: any) => {
 		switch (formElement.type) {
@@ -96,7 +96,7 @@ const DynamicForm = ({ handleFormSubmit, formElements, initialValues, validation
 								className={classes.button}
 								color="primary"
 								variant="contained"
-								
+								isSubmitDisable={isSubmitDisable}
 							>
 								Submit
 							</SubmitButton>
@@ -113,6 +113,7 @@ DynamicForm.propTypes = {
 	formElements: PropTypes.array,
 	initialValues: PropTypes.object,
 	validationSchema: PropTypes.object,
+	isSubmitDisable:PropTypes.bool
 };
 
 export default DynamicForm;

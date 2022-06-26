@@ -16,7 +16,7 @@ export default function Home() {
 	const [initialValues, setInitialValues] = useState({});
 	const [responseData, setResponseData] = useState('');
 	const { products } = useSelector((state: any) => state?.product);
-
+	const [isSubmitDisable,setIsSubmitDisable] = useState(false)
   const validationDecider = (fieldName:string) => {
     switch (fieldName) {
       case "gender":
@@ -38,6 +38,7 @@ export default function Home() {
 
 	useEffect(()=>{
 		setResponseData(products.response);
+		setIsSubmitDisable(products?.submissionLoading)
 	},[products])
 
 	useEffect(() => {
@@ -84,6 +85,7 @@ export default function Home() {
 						initialValues={initialValues}
 						validationSchema={yup.object().shape(validationSchema)}
 						handleFormSubmit={handleFormSubmit}
+						isSubmitDisable={isSubmitDisable}
 					/>
 				) : (
           <div style={{width:"100%", height:"100%", display: "flex", justifyContent:"center", alignItems :"center"}}>
