@@ -10,9 +10,9 @@ import Welcome from '@/components/Welcome';
 import { LayoutProps } from '@/types';
 
 export default function Layout({
-  title = 'this is website title',
-  description = 'This is website description',
-  keywords = 'some keywords',
+  title = 'UlvenTech Demo',
+  description = 'This is a dynamic form demo completed as a task provided by UlvenTech',
+  keywords = 'dynamic form',
   children,
 }: LayoutProps) {
   const router = useRouter();
@@ -23,10 +23,8 @@ export default function Layout({
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
       </Head>
-      <Header />
-      {router.pathname === '/' && <Welcome />}
+      {/* <Header /> */}
       <Container maxWidth="lg">{children}</Container>
-      <Footer />
     </div>
   );
 }

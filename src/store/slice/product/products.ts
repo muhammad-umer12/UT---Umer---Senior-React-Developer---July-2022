@@ -1,11 +1,11 @@
-import { apiCallBegan } from '@/customActions/api';
+import { apiCallBegan, submission } from '@/customActions/api';
 import { createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, AppGetState } from 'store';
 
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
-    list: null,
+    list: [],
     error: '',
     loading: false,
   },
@@ -14,7 +14,8 @@ const productsSlice = createSlice({
       state.loading = true;
     },
     productsReceived: (state, action) => {
-      state.list = action.payload;
+      const {success, data} = action.payload;
+      if(success) state.list = data;
       state.loading = false;
     },
     productsRequestedFailed: (state, action) => {
@@ -32,15 +33,26 @@ export const { productsRequested, productsReceived, productsRequestedFailed } =
 export default productsSlice.reducer;
 
 // ACTION CREATORS
-export const actionFetchProducts =
-  (keyword = '') =>
+export const fetchFormFields =
+  () =>
   async (dispatch: AppDispatch, getState: AppGetState) => {
     dispatch(
       apiCallBegan({
-        url: `/api/products?keyword=${keyword}`,
+        url: `${process.env.NEXT_PUBLIC_BACKEND_ROUTE}`,
         onStart: productsRequested.type,
         onSuccess: productsReceived.type,
         onError: productsRequestedFailed.type,
       })
     );
   };
+
+  export const submitForm =
+  (data: any) =>
+  {
+    return  (dispatch: AppDispatch) => {
+    dispatch(
+      submission({...data
+      })
+    );
+  };
+}

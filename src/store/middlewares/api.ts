@@ -51,7 +51,7 @@ const api =
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       const errorMessage =
         error.response && error.response.data.message
           ? error.response.data.message
