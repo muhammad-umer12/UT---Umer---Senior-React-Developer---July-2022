@@ -1,14 +1,19 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {  Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Formik, Form } from "formik";
-import TextField from "./FormFields/TextField";
-import SubmitButton from "./FormFields/SubmitButton";
-import Select from "./FormFields/Select";
+import FormComponents from "./FormFields";
 import PropTypes from "prop-types";
 
-const DynamicForm = ({ handleFormSubmit, formElements, initialValues, validationSchema,isSubmitDisable }: any) => {
+const { TextField, SubmitButton, Select } = FormComponents;
 
+const DynamicForm = ({
+	handleFormSubmit,
+	formElements,
+	initialValues,
+	validationSchema,
+	isSubmitDisable = false,
+}: any) => {
 	const Component = (formElement: any) => {
 		switch (formElement.type) {
 			case "select":
@@ -52,11 +57,11 @@ const DynamicForm = ({ handleFormSubmit, formElements, initialValues, validation
 		inputGrid: {
 			paddingBottom: "2em",
 		},
-        footer: {
-            padding: " 0",
+		footer: {
+			padding: " 0",
 			width: "100%",
-            marginBottom:"55px"
-        },
+			marginBottom: "55px",
+		},
 	}));
 
 	const classes = useStyles();
@@ -87,9 +92,7 @@ const DynamicForm = ({ handleFormSubmit, formElements, initialValues, validation
 									</Grid>
 								);
 							})}
-						<div
-							className={classes.footer}
-						>
+						<div className={classes.footer}>
 							<SubmitButton
 								id="submitButton"
 								key={"submitButton"}
@@ -113,7 +116,7 @@ DynamicForm.propTypes = {
 	formElements: PropTypes.array,
 	initialValues: PropTypes.object,
 	validationSchema: PropTypes.object,
-	isSubmitDisable:PropTypes.bool
+	isSubmitDisable: PropTypes.bool,
 };
 
 export default DynamicForm;

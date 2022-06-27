@@ -14,44 +14,39 @@ export default function Home() {
 	const [formElements, setFormElements] = useState([]);
 	const [validationSchema, setValidationSchema] = useState<any>({});
 	const [initialValues, setInitialValues] = useState({});
-	const [responseData, setResponseData] = useState('');
 	const { products } = useSelector((state: any) => state?.product);
-	const [isSubmitDisable,setIsSubmitDisable] = useState(false)
-  const validationDecider = (fieldName:string) => {
-    switch (fieldName) {
-      case "gender":
-        return yup.string().oneOf(['male', 'female', "others"]);
-      case "testimonial":
-        return yup.string();
-      case "emailAddress": 
-        return yup.string().email("Please enter a valid email.").required("This field is required.")
-      case "age":
-        return yup.number();
-      default:
-        return yup.string().required("This field is required.");
-    }
-  }
+	const validationDecider = (fieldName: string) => {
+		switch (fieldName) {
+			case "gender":
+				return yup.string().oneOf(["male", "female", "others"]);
+			case "testimonial":
+				return yup.string();
+			case "emailAddress":
+				return yup
+					.string()
+					.email("Please enter a valid email.")
+					.required("This field is required.");
+			case "age":
+				return yup.number();
+			default:
+				return yup.string().required("This field is required.");
+		}
+	};
 
 	useEffect(() => {
 		dispatch(fetchFormFields());
 	}, []);
 
-	useEffect(()=>{
-		setResponseData(products.response);
-		setIsSubmitDisable(products?.submissionLoading)
-	},[products])
-
 	useEffect(() => {
-		
 		if (products?.list?.length) {
-			
-		
 			const values = {};
-      const validation = {};
+			const validation = {};
 			const elements = products.list.map(
 				({ fieldName, type, value, options }: any) => {
 					Object.assign(values, { [fieldName]: value });
-          Object.assign(validation, {[fieldName]: validationDecider(fieldName)})
+					Object.assign(validation, {
+						[fieldName]: validationDecider(fieldName),
+					});
 					let fieldData: any = {
 						fieldName,
 						type,
@@ -67,12 +62,11 @@ export default function Home() {
 			);
 			setFormElements(elements);
 			setInitialValues(values);
-      setValidationSchema(validation);
+			setValidationSchema(validation);
 		}
 	}, [products]);
 
 	const handleFormSubmit = (values: any) => {
-		
 		dispatch(submitForm(values));
 	};
 
@@ -85,22 +79,30 @@ export default function Home() {
 						initialValues={initialValues}
 						validationSchema={yup.object().shape(validationSchema)}
 						handleFormSubmit={handleFormSubmit}
-						isSubmitDisable={isSubmitDisable}
+						isSubmitDisable={products?.submissionLoading}
 					/>
 				) : (
-          <div style={{width:"100%", height:"100%", display: "flex", justifyContent:"center", alignItems :"center"}}>
-					<CircularProgress />
-          </div>
+					<div
+						style={{
+							width: "100%",
+							height: "100%",
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						<CircularProgress />
+					</div>
 				)}
-		
-		{ responseData?.length ?
-		(<div>
-		<h2>Response</h2>	
-		<p>{responseData}</p>
-		</div>)
-		:
-		<></>	
-		}
+
+				{products.response?.length ? (
+					<div>
+						<h2>Response</h2>
+						<p>{products.response}</p>
+					</div>
+				) : (
+					<></>
+				)}
 			</Container>
 		</Layout>
 	);

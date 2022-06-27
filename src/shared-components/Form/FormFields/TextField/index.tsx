@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles, TextField, Typography } from "@material-ui/core";
 import { useField } from "formik";
-import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles({
 	root: { display: "flex", width: "100%" },

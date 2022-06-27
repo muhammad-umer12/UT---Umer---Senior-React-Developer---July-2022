@@ -69,9 +69,8 @@ export const fetchFormFields =
         method:'POST',
         onStart: productSubmissionRequested.type,
         onSuccess: productSubmissionRecieved.type,
-    
-        data:data,
-    
+        onError: productsRequestedFailed.type,
+        data,
       })
    );
   
